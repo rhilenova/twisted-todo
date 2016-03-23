@@ -18,3 +18,8 @@ dependencies {
     runtime 'org.hsqldb:hsqldb:[2,)',
             'org.hsqldb:sqltool:[2,)'
 }
+
+dependencies {
+    runtime 'org.apache.commons:commons-collections4:[4,)'
+    compile 'org.apache.commons:commons-collections4:[4,)'
+}

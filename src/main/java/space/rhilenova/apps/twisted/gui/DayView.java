@@ -43,7 +43,7 @@ public class DayView extends JPanel
         {
             this.setLayout(new BorderLayout());
             Integer[] borders = {6};
-            PartialLineBorder test = new PartialLineBorder(Arrays.asList(borders), Color.BLACK, 2);
+            PartialLineBorder test = new PartialLineBorder(Arrays.asList(borders), Color.BLACK, 2, 0, 10);
             this.setBorder(test);
 
             SimpleDateFormat fmt = new SimpleDateFormat();
@@ -75,22 +75,30 @@ public class DayView extends JPanel
 
             JLabel required_l = new JLabel("Required");
             required_l.setFont(new Font("Arial", Font.BOLD, 16));
-            required_l.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            Integer[] required_s = {4, 6, 7};
+            PartialLineBorder required_b = new PartialLineBorder(Arrays.asList(required_s), Color.BLACK, 1, 10, 10);
+            required_l.setBorder(required_b);
             this.add(required_l);
 
             JLabel weekly = new JLabel("Weekly Goals");
             weekly.setFont(new Font("Arial", Font.BOLD, 16));
-            weekly.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            Integer[] weekly_s = {3, 5, 6};
+            PartialLineBorder weekly_b = new PartialLineBorder(Arrays.asList(weekly_s), Color.BLACK, 1, 10, 10);
+            weekly.setBorder(weekly_b);
             this.add(weekly);
 
             JLabel groups_l = new JLabel("Groups");
             groups_l.setFont(new Font("Arial", Font.BOLD, 16));
-            groups_l.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            Integer[] groups_s = {1, 2, 4};
+            PartialLineBorder groups_b = new PartialLineBorder(Arrays.asList(groups_s), Color.BLACK, 1, 10, 10);
+            groups_l.setBorder(groups_b);
             this.add(groups_l);
 
             JLabel monthly = new JLabel("Monthly Goals");
             monthly.setFont(new Font("Arial", Font.BOLD, 16));
-            monthly.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            Integer[] monthly_s = {0, 1, 3};
+            PartialLineBorder monthly_b = new PartialLineBorder(Arrays.asList(monthly_s), Color.BLACK, 1, 10, 10);
+            monthly.setBorder(monthly_b);
             this.add(monthly);
         }
     }

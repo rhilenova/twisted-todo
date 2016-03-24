@@ -1,6 +1,7 @@
 package space.rhilenova.apps.twisted.gui;
 
 import space.rhilenova.apps.twisted.todos.SingleTODO;
+import space.rhilenova.apps.twisted.todos.TODO;
 import space.rhilenova.apps.twisted.todos.TODOGroup;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class DayView extends JPanel
      * @param required A list of required (single) todos for this day.
      * @param groups A list of the todo groups for this day.
      */
-    public DayView(Date date, List<SingleTODO> required, List<TODOGroup> groups)
+    public DayView(Date date, List<TODO> required, List<TODO> groups)
     {
         this.setLayout(new BorderLayout());
         this.add(new DatePane(date), BorderLayout.NORTH);
@@ -61,24 +62,17 @@ public class DayView extends JPanel
 
     private class DayPane extends JPanel
     {
-        /** A list of the required (single) todos for this day. */
-        private List<SingleTODO> required;
-        /** A list of the todo groups for this day. */
-        private List<TODOGroup> groups;
-
-        private DayPane(List<SingleTODO> required, List<TODOGroup> groups)
+        private DayPane(List<TODO> required, List<TODO> groups)
         {
-            this.required = required;
-            this.groups = groups;
-
             this.setLayout(new GridLayout(2, 2));
 
-            JLabel required_l = new JLabel("Required");
-            required_l.setFont(new Font("Arial", Font.BOLD, 16));
+            TODOPane required_p = new TODOPane("Required", required);
+            //JLabel required_l = new JLabel("Required");
+            //required_l.setFont(new Font("Arial", Font.BOLD, 16));
             Integer[] required_s = {4, 6, 7};
             PartialLineBorder required_b = new PartialLineBorder(Arrays.asList(required_s), Color.BLACK, 1, 10, 10);
-            required_l.setBorder(required_b);
-            this.add(required_l);
+            required_p.setBorder(required_b);
+            this.add(required_p);
 
             JLabel weekly = new JLabel("Weekly Goals");
             weekly.setFont(new Font("Arial", Font.BOLD, 16));
@@ -100,6 +94,37 @@ public class DayView extends JPanel
             PartialLineBorder monthly_b = new PartialLineBorder(Arrays.asList(monthly_s), Color.BLACK, 1, 10, 10);
             monthly.setBorder(monthly_b);
             this.add(monthly);
+        }
+    }
+
+    private class TODOPane extends JPanel
+    {
+        private TODOPane(String name, List<TODO> todos)
+        {
+            this.setLayout(new BorderLayout());
+            JLabel name_l = new JLabel(name);
+            name_l.setFont(new Font("Arial", Font.BOLD, 16));
+            this.add(name_l, BorderLayout.NORTH);
+            JPanel scroll_panel = new JPanel();
+            scroll_panel.setLayout(new BoxLayout(scroll_panel, BoxLayout.Y_AXIS));
+            for (TODO todo : todos)
+            {
+                if (todo instanceof SingleTODO)
+                {
+                    scroll_panel.add(new JSingleTODO((SingleTODO)todo));
+                }
+            }
+            JScrollPane test = new JScrollPane(scroll_panel);
+            this.add(test, BorderLayout.CENTER);
+        }
+    }
+
+    private class JSingleTODO extends JPanel
+    {
+        private JSingleTODO(SingleTODO todo)
+        {
+            this.setLayout(new BorderLayout());
+            this.add(new JCheckBox(todo.getName(), todo.isCompleted()));
         }
     }
 }

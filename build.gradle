@@ -23,3 +23,8 @@ dependencies {
     runtime 'org.apache.commons:commons-collections4:[4,)'
     compile 'org.apache.commons:commons-collections4:[4,)'
 }
+
+dependencies {
+    runtime 'joda-time:joda-time:[2.9,)'
+    compile 'joda-time:joda-time:[2.9,)'
+}

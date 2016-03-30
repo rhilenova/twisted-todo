@@ -61,4 +61,19 @@ public class SingleTODO extends TODO
     {
         return _repeating;
     }
+
+    public int getHoursCompleted()
+    {
+        return _hours_completed;
+    }
+
+    public int getWeeklyGoal()
+    {
+        return _weekly_goal;
+    }
+
+    public int getMonthlyGoal()
+    {
+        return _monthly_goal;
+    }
 }

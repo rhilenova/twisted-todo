@@ -79,20 +79,20 @@ public class DayView extends JPanel
             required_p.setBorder(required_b);
             this.add(required_p);
 
-            List<TODO> groups_todo = new ArrayList<TODO>(groups);
-            ProgressPane weekly = new ProgressPane("Weekly Goals", groups_todo, ProgressPane.TYPE.WEEKLY);
+            ProgressPane weekly = new ProgressPane("Weekly Goals", groups, ProgressPane.TYPE.WEEKLY);
             Integer[] weekly_s = {3, 5, 6};
             PartialLineBorder weekly_b = new PartialLineBorder(Arrays.asList(weekly_s), Color.BLACK, 1, 10, 10);
             weekly.setBorder(weekly_b);
             this.add(weekly);
 
+            List<TODO> groups_todo = new ArrayList<TODO>(groups);
             TODOPane groups_p = new TODOPane("Groups", groups_todo);
             Integer[] groups_s = {1, 2, 4};
             PartialLineBorder groups_b = new PartialLineBorder(Arrays.asList(groups_s), Color.BLACK, 1, 10, 10);
             groups_p.setBorder(groups_b);
             this.add(groups_p);
 
-            ProgressPane monthly = new ProgressPane("Monthly Goals", groups_todo, ProgressPane.TYPE.MONTHLY);
+            ProgressPane monthly = new ProgressPane("Monthly Goals", groups, ProgressPane.TYPE.MONTHLY);
             Integer[] monthly_s = {0, 1, 3};
             PartialLineBorder monthly_b = new PartialLineBorder(Arrays.asList(monthly_s), Color.BLACK, 1, 10, 10);
             monthly.setBorder(monthly_b);

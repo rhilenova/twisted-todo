@@ -34,12 +34,15 @@ public class Main
     {
         ArrayList<TODOGroup> groups = new ArrayList<>();
 
-        ArrayList<SingleTODO> things = new ArrayList<>();
-        SingleTODO thing1 = new SingleTODO("thing1", new LocalDate(), 1, 10, 20);
-        things.add(thing1);
-        SingleTODO thing2 = new SingleTODO("thing2", new LocalDate(), 5, 8, 18);
-        things.add(thing2);
-        groups.add(new TODOGroup("Things", things));
+        for (int x = 0; x < 5; ++x)
+        {
+            ArrayList<SingleTODO> things = new ArrayList<>();
+            SingleTODO thing1 = new SingleTODO(Integer.toString(x) + "thing1", new LocalDate(), x, 10, 20);
+            things.add(thing1);
+            SingleTODO thing2 = new SingleTODO(Integer.toString(x) + "thing2", new LocalDate(), (3 * x) % 18, 8, 18);
+            things.add(thing2);
+            groups.add(new TODOGroup("Things " + Integer.toString(x), things));
+        }
 
         return groups;
     }

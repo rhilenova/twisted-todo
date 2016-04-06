@@ -6,7 +6,9 @@ import space.rhilenova.apps.twisted.todos.TODO;
 import space.rhilenova.apps.twisted.todos.TODOGroup;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +18,20 @@ import java.util.List;
  */
 public class DayView extends JPanel
 {
+    /**
+     * Mode in which to draw JSingleTODO.
+     */
+    private enum SINGLE_MODE {
+        /**
+         * Draw a required todo. Does not have any hour field.
+         */
+        REQUIRED,
+        /**
+         * Draw a todo from a group. Has an hour field.
+         */
+        GROUP
+    }
+
     /**
      * Create a new panel for displaying the current day's todo.
      *
@@ -123,7 +139,11 @@ public class DayView extends JPanel
             {
                 if (todo instanceof SingleTODO)
                 {
-                    scroll_panel.add(new JSingleTODO((SingleTODO)todo));
+                    scroll_panel.add(new JSingleTODO((SingleTODO)todo, SINGLE_MODE.REQUIRED));
+                }
+                else if (todo instanceof TODOGroup)
+                {
+                    scroll_panel.add(new JTODOGroup((TODOGroup)todo));
                 }
             }
             JScrollPane test = new JScrollPane(scroll_panel);
@@ -140,11 +160,53 @@ public class DayView extends JPanel
          * Create a JPanel for drawing a single todo item.
          *
          * @param todo The todo to draw.
+         * @param mode The todo mode to draw.
          */
-        private JSingleTODO(SingleTODO todo)
+        private JSingleTODO(SingleTODO todo, SINGLE_MODE mode)
         {
             this.setLayout(new BorderLayout());
-            this.add(new JCheckBox(todo.getName(), todo.isCompleted()));
+            if (mode == SINGLE_MODE.REQUIRED)
+            {
+                this.add(new JCheckBox(todo.getName(), todo.isCompleted()));
+            }
+            else if (mode == SINGLE_MODE.GROUP)
+            {
+                JPanel temp = new JPanel();
+                temp.setLayout(new BorderLayout());
+                temp.add(new JLabel(todo.getName()), BorderLayout.CENTER);
+                NumberFormat format = NumberFormat.getIntegerInstance();
+                format.setMaximumIntegerDigits(2);
+                JFormattedTextField hours = new JFormattedTextField(format);
+                hours.setText("0");
+                hours.setColumns(2);
+                temp.add(hours, BorderLayout.WEST);
+                this.add(temp);
+            }
+            else
+            {
+                throw new UnsupportedOperationException("Unimplemented mode for JSingleTODO.");
+            }
+        }
+    }
+
+    /**
+     * JPanel for drawing a todo group.
+     */
+    private class JTODOGroup extends JPanel
+    {
+        /**
+         * Create a JPanel for drawing a todo group.
+         *
+         * @param todo The todo to draw.
+         */
+        private JTODOGroup(TODOGroup todo)
+        {
+            this.setBorder(new TitledBorder(todo.getName()));
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            for (SingleTODO single : todo.getTODOs())
+            {
+                this.add(new JSingleTODO(single, SINGLE_MODE.GROUP));
+            }
         }
     }
 }
